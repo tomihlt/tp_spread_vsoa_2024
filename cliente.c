@@ -202,6 +202,7 @@ void send_message(char *group){
 }
 
 void leave_group(char *group){
-	SP_leave(Mbox, group);
-	printf("Te has salido del grupo %s\n.", group);
+	int ret = SP_leave(Mbox, group);
+	if(ret == 0)
+		printf("Te has salido del grupo %s\n.", group);
 }
