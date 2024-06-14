@@ -1,0 +1,11 @@
+==========
+User Menu:
+----------
+
+	j <group> -- join a group
+	l <group> -- leave a group
+
+	s <group> -- send a message
+	
+	o -- options
+	q -- quit
