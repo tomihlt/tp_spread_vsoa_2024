@@ -138,8 +138,7 @@ void *read_messages(){
 		
 		printf("\n============================\n");
 		
-		if( Is_regular_mess( service_type ) )
-		{
+		if( Is_regular_mess( service_type ) ){
 			/* A regular message, sent by one of the processes */
 			mess[ret] = 0;
 			if     ( Is_unreliable_mess( service_type ) ) printf("received UNRELIABLE ");
@@ -151,7 +150,7 @@ void *read_messages(){
 			printf("message from %s of type %d (endian %d), to %d groups \n(%d bytes): %s\n",
 				sender, mess_type, endian_mismatch, num_groups, ret, mess );
 
-		}else if ( Is_reg_memb_mess( service_type ) ){
+		}else if (Is_reg_memb_mess(service_type)){
 			printf("Received REGULAR membership for group %s with %d members, where i am member %d:\n", sender, num_groups, mess_type);
 			for( i=0; i < num_groups; i++ )
 				printf("\t%s\n", &target_groups[i][0] );
@@ -159,7 +158,15 @@ void *read_messages(){
 			if( Is_caused_join_mess( service_type ) ) printf("Due to the JOIN.\n");
 			if( Is_caused_leave_mess( service_type ) ) printf("caused by LEAVE.\n");
 			if( Is_caused_disconnect_mess( service_type ) ) printf("caused by DISCONNECT.\n");
-		}
+			
+		}else if(Is_transition_mess(service_type)){
+			printf("received TRANSITIONAL membership for group %s\n", sender );
+			
+		}else if(Is_caused_leave_mess( service_type)){
+			printf("received membership message that left group %s\n", sender );
+			
+		}else 
+			printf("received incorrect membership message of type %d\n", service_type );
 	}while(1);
 	
 }
